@@ -3,7 +3,9 @@ import { ReceiveFileMetadataDto } from '@repo/api';
 
 @Injectable()
 export class FileUploadService {
-  receiveFilesMetaData(files: ReceiveFileMetadataDto) {
-    return files;
+  receiveFilesMetaData(filesMetaData: ReceiveFileMetadataDto) {
+    console.info('changed metadata')
+    console.info(filesMetaData);
+    return filesMetaData;
   }
 }

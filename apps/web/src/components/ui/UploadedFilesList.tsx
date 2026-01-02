@@ -1,15 +1,20 @@
 import { X } from 'lucide-react'
 import type { Dispatch, SetStateAction } from 'react'
+import { useFileMetaDataUpload } from '@/hooks/useFileMetaDataUpload'
+
 
 interface FileList {
   files: Array<File> | null
   setFiles: Dispatch<SetStateAction<Array<File> | null>>
 }
 export default function UploadedFilesList({ files, setFiles }: FileList) {
+  const { mutate } = useFileMetaDataUpload()
   function handleRemoveFile(fileIndex: number) {
     setFiles(prevFiles => {
       if (!prevFiles) return []
-      return prevFiles.filter((_, ind) => ind !== fileIndex)
+      const updatedFiles = prevFiles.filter((_, ind) => ind !== fileIndex)
+      mutate(updatedFiles)
+      return updatedFiles
     })
   }
   return (

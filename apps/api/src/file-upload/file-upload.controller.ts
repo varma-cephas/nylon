@@ -6,8 +6,7 @@ import { FileUploadService } from './file-upload.service';
 export class FileUploadController {
   constructor(public fileUploadService: FileUploadService) {}
   @Post('metadata')
-  receiveFilesMetaData(@Body() files: ReceiveFileMetadataDto) {
-    console.info(files);
-    return this.fileUploadService.receiveFilesMetaData(files);
+  receiveFilesMetaData(@Body() filesMetaData: ReceiveFileMetadataDto) {
+    return this.fileUploadService.receiveFilesMetaData(filesMetaData);
   }
 }

@@ -14,6 +14,7 @@ export default function DragDrop() {
     const droppedFiles = Array.from(event.dataTransfer.files)
     // console.info(droppedFiles)
     if (droppedFiles.length) {
+      mutate(droppedFiles)
       setIsDragging(false)
       setFiles(prevDroppedFiles => {
         if (!prevDroppedFiles) return droppedFiles
