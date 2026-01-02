@@ -1,12 +1,20 @@
-import { IsString, IsNumber } from 'class-validator';
+import { IsString, IsNumber, IsArray, ValidateNested } from 'class-validator';
+import { Type } from 'class-transformer';
 
-export class ReceiveFileMetadataDto {
+export class FileMetaDataDTO {
   @IsString()
-  fileName!: string;
+  fileName: string;
 
   @IsString()
-  fileType!: string;
+  fileType: string;
 
   @IsNumber()
-  fileSize!: number;
+  fileSize: number;
+}
+
+export class ReceiveFileMetadataDto {
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => FileMetaDataDTO)
+  files: FileMetaDataDTO[];
 }

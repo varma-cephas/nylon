@@ -3,12 +3,12 @@ import PickFile from './PickFile'
 import UploadedFilesList from './UploadedFilesList'
 import Button from './Button'
 import type { DragEvent } from 'react'
-import { useFileUpload } from '@/hooks/useFileUpload'
+import { useFileMetaDataUpload } from '@/hooks/useFileMetaDataUpload'
 
 export default function DragDrop() {
   const [files, setFiles] = useState<Array<File> | null>(null)
   const [isDragging, setIsDragging] = useState(false)
-  const { mutate, isPending, isError } = useFileUpload()
+  const { mutate, isPending, isError } = useFileMetaDataUpload()
   const handleFileDrop = (event: DragEvent) => {
     event.preventDefault()
     const droppedFiles = Array.from(event.dataTransfer.files)
