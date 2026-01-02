@@ -14,10 +14,12 @@ export default function DragDrop() {
     const droppedFiles = Array.from(event.dataTransfer.files)
     // console.info(droppedFiles)
     if (droppedFiles.length) {
-      mutate(droppedFiles)
       setIsDragging(false)
       setFiles(prevDroppedFiles => {
-        if (!prevDroppedFiles) return droppedFiles
+        if (!prevDroppedFiles) {
+          mutate(droppedFiles)
+          return droppedFiles
+        }
         const uniqueNewFiles = droppedFiles.filter(
           newFile =>
             !prevDroppedFiles.some(
@@ -25,7 +27,9 @@ export default function DragDrop() {
                 prevFile.name === newFile.name && prevFile.size === newFile.size
             )
         )
-        return [...prevDroppedFiles, ...uniqueNewFiles]
+        const updatedFiles = [...prevDroppedFiles, ...uniqueNewFiles]
+        mutate(updatedFiles)
+        return updatedFiles
       })
     }
   }
@@ -38,7 +42,7 @@ export default function DragDrop() {
 
   function handleUploadFiles() {
     if (files) {
-      mutate(files)
+      return 'files uploaded'
     }
   }
   return (

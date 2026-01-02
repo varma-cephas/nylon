@@ -2,7 +2,6 @@ import { X } from 'lucide-react'
 import type { Dispatch, SetStateAction } from 'react'
 import { useFileMetaDataUpload } from '@/hooks/useFileMetaDataUpload'
 
-
 interface FileList {
   files: Array<File> | null
   setFiles: Dispatch<SetStateAction<Array<File> | null>>
