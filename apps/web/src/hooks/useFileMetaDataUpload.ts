@@ -1,4 +1,4 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 import type {
   FileMetaDataWithPresignUrlDTO,
   ReceiveFileMetadataDto,
@@ -7,7 +7,6 @@ import type {
 import { api } from '@/api/axios'
 
 export function useFileMetaDataUpload() {
-  const queryClient = useQueryClient()
   return useMutation({
     mutationFn: async (files: Array<FileMetaDataWithPresignUrlDTO>) => {
       if (!files.length) throw new Error('No files were provided.')
@@ -21,9 +20,6 @@ export function useFileMetaDataUpload() {
       const { data }: { data: ReceiveFileMetadataWithPresignUrlDto } =
         await api.post('/file-upload/metadata', filesMetaData)
       return data
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['files'] })
     },
   })
 }
