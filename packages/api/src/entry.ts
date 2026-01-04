@@ -1,1 +1,1 @@
-export { ReceiveFileMetadataDto } from "./file-upload/dto/receive-file-metadata.dto"
+export { ReceiveFileMetadataDto, ReceiveFileMetadataWithPresignUrlDto, FileMetaDataWithPresignUrlDTO } from "./file-upload/dto/receive-file-metadata.dto"

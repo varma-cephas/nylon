@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { ReceiveFileMetadataDto } from '@repo/api';
+import { PresignUrlService } from 'src/presign-url/presign-url.service';
 
 @Injectable()
 export class FileUploadService {
-  receiveFilesMetaData(filesMetaData: ReceiveFileMetadataDto) {
-    console.info('changed metadata')
-    console.info(filesMetaData);
-    return filesMetaData;
+  constructor( private presignUrlService: PresignUrlService ) {}
+  async addPresignUrlToFilesMetadata(filesMetaData: ReceiveFileMetadataDto) {
+    return await this.presignUrlService.generateFilesPresignedUrl(filesMetaData)
   }
 }
