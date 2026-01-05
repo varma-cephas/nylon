@@ -14,6 +14,7 @@ export default function PickFile({ setFiles }: PropTypes) {
           fileSize: file.size,
           fileRawInfo: file,
           presignedUrl: '',
+          fileId: '',
         }))
         setFiles(prevDroppedFiles => {
           if (!prevDroppedFiles) return selectedFiles

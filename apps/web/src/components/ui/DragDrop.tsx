@@ -21,6 +21,7 @@ export default function DragDrop() {
       fileSize: file.size,
       fileRawInfo: file,
       presignedUrl: '',
+      fileId: ''
     }))
     // console.info(droppedFiles)
     if (droppedFiles.length) {

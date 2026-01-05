@@ -33,8 +33,6 @@ export function useFilesUpload() {
                 }
               },
             });
-
-            // 3. Mark as success
             setUploads((prev) => ({
               ...prev,
               [fileData.fileId]: { progress: 100, status: 'success' },
