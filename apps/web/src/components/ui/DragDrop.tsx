@@ -1,15 +1,17 @@
-import { useCallback, useState } from 'react'
+import { useState } from 'react'
 import PickFile from './PickFile'
 import UploadedFilesList from './UploadedFilesList'
 import Button from './Button'
 import type { DragEvent } from 'react'
 import type { FilesType } from '@/types/Files'
 import { useFileMetaDataUpload } from '@/hooks/useFileMetaDataUpload'
+import { useFilesUpload } from '@/hooks/useFileUpload'
 
 export default function DragDrop() {
   const [files, setFiles] = useState<Array<FilesType> | null>(null)
   const [isDragging, setIsDragging] = useState(false)
-  const { mutate, isPending, isError } = useFileMetaDataUpload()
+  const { mutateAsync, isPending, isError } = useFileMetaDataUpload()
+  const { mutateAsync: uploadFiles } = useFilesUpload()
 
   const handleFileDrop = (event: DragEvent) => {
     event.preventDefault()
@@ -43,30 +45,34 @@ export default function DragDrop() {
   const hanldeDragOver = (event: DragEvent) => {
     event.preventDefault()
   }
+
+  // useEffect(() => {
+  //   console.info(files)
+  // }, [files])
   const handleDragEnter = () => setIsDragging(true)
   const handleDragLeave = () => setIsDragging(false)
 
-  function handleUploadFiles() {
+  async function handleUploadFiles() {
+    const filesReadyForUpload: Array<FilesType> = []
     if (files !== null && files.length >= 1) {
-      return mutate(files, {
+      await mutateAsync(files, {
         onSuccess: data => {
-          setFiles(prevFile => {
-            if (prevFile !== null) {
-              return prevFile.map(file => {
-                const presignedUrl =
-                  data.files.find(
-                    signedFile => file.fileName === signedFile.fileName
-                  )?.presignedUrl || ''
-                return {
-                  ...file,
-                  presignedUrl,
-                }
-              })
+          const filesWithPresignUrl: Array<FilesType> = files.map(file => {
+            const presignedUrl =
+              data.files.find(
+                signedFile => file.fileName === signedFile.fileName
+              )?.presignedUrl || ''
+            return {
+              ...file,
+              presignedUrl,
             }
-            return null
           })
+          setFiles(filesWithPresignUrl)
+          filesReadyForUpload.push(...filesWithPresignUrl)
         },
       })
+      await uploadFiles(filesReadyForUpload)
+      return
     }
     // console.info('please upload a file')
     return 'No files uploaded yet'

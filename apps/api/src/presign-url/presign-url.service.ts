@@ -22,7 +22,7 @@ export class PresignUrlService {
     private async presignUrl(fileName: string, fileType:string, fileSize: number){
         const uniqueFileKey = `${uuidv4()}-${fileName}`
         const command = new PutObjectCommand({
-            Bucket: this.bucketName,
+            Bucket: this.configService.getOrThrow('BUCKET_NAME'),
             Key: uniqueFileKey,
             ContentType: fileType,
             ContentLength: fileSize
