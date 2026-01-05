@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import PickFile from './PickFile'
 import UploadedFilesList from './UploadedFilesList'
 import Button from './Button'
@@ -71,7 +71,6 @@ export default function DragDrop() {
           filesReadyForUpload.push(...filesWithPresignUrl)
         },
       })
-      console.info(filesReadyForUpload)
       await uploadFiles(filesReadyForUpload)
       return
     }

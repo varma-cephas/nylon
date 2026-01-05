@@ -7,12 +7,11 @@ export function useFilesUpload() {
     mutationFn: async (files: Array<FilesType>) => {
       for (const file of files) {
         try {
-          const res = await axios.put(file.presignedUrl, file.fileRawInfo, {
+          await axios.put(file.presignedUrl, file.fileRawInfo, {
             headers: { 'Content-Type': file.fileType, Accept: '*/*' },
           })
-          console.info(res.status)
-        } catch (err) {
-          throw new Error('There was an error uploading file')
+        } catch (err: unknown) {
+          if (err) throw new Error('There was an error uploading file', err)
         }
       }
 
