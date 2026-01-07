@@ -4,8 +4,8 @@ import plimit from 'p-limit'
 import type { FilesType } from '@/types/Files'
 import { useState } from 'react'
 
-const limit = plimit(3)
 export function useFilesUpload() {
+  const limit = plimit(3)
   const [uploads, setUploads] = useState<{[key: string]: { progress: number, status: string }}>({})
   const mutation = useMutation({
     mutationFn: async (files:  Array<FilesType>) => {

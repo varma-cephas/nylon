@@ -23,7 +23,7 @@ export default function DragDrop() {
       presignedUrl: '',
       fileId: ''
     }))
-    // console.info(droppedFiles)
+
     if (droppedFiles.length) {
       setIsDragging(false)
       if (!files?.length) {

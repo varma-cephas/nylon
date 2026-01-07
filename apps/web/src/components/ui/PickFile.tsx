@@ -1,10 +1,7 @@
-import type { ChangeEvent, Dispatch, SetStateAction } from 'react'
-import type { FilesType } from '@/types/Files'
+import type { ChangeEvent } from 'react'
+import type { PickFilePropTypes } from '@/types/Files'
 
-interface PropTypes {
-  setFiles: Dispatch<SetStateAction<Array<FilesType> | null>>
-}
-export default function PickFile({ setFiles }: PropTypes) {
+export default function PickFile({ setFiles }: PickFilePropTypes) {
   const handleFileSelect = (event: ChangeEvent<EventTarget>) => {
     if (event.target instanceof HTMLInputElement) {
       if (event.target.files) {
