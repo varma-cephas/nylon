@@ -1,48 +1,23 @@
-import type { ChangeEvent } from 'react'
-import type { PickFilePropTypes } from '@/types/Files'
+import { UploadCloudIcon } from 'lucide-react'
 
-export default function PickFile({ setFiles }: PickFilePropTypes) {
-  const handleFileSelect = (event: ChangeEvent<EventTarget>) => {
-    if (event.target instanceof HTMLInputElement) {
-      if (event.target.files) {
-        const selectedFiles = Array.from(event.target.files).map(file => ({
-          fileName: file.name,
-          fileType: file.type,
-          fileSize: file.size,
-          fileRawInfo: file,
-          presignedUrl: '',
-          fileId: '',
-        }))
-        setFiles(prevDroppedFiles => {
-          if (!prevDroppedFiles) return selectedFiles
-          const uniqueNewFiles = selectedFiles.filter(
-            newFile =>
-              !prevDroppedFiles.some(
-                prevFile =>
-                  prevFile.fileName === newFile.fileName &&
-                  prevFile.fileSize === newFile.fileSize
-              )
-          )
-          return [...prevDroppedFiles, ...uniqueNewFiles]
-        })
-      } else {
-        setFiles(null)
-        return
-      }
-    }
-  }
+export default function PickFile({handleFileSelect}: {handleFileSelect: (event: React.ChangeEvent<EventTarget>) => void}) {
   return (
     <>
-      <input
+      <label className='border p-2 rounded-lg cursor-pointer' htmlFor='browseFile'>
+          <UploadCloudIcon />
+      </label>
+      <div className='pt-2'>
+        <input
         type="file"
         id="browseFile"
         name="browseFile"
         onChange={handleFileSelect}
         className="hidden"
       />
-      <label className="underline pl-1 cursor-pointer" htmlFor="browseFile">
-        Browse.
-      </label>
+      <p className='text-gray-600 pt-2'>
+        Drag files here or <label className="underline pl-1 cursor-pointer" htmlFor="browseFile">Browse.</label>
+      </p>
+      </div>
     </>
   )
 }
