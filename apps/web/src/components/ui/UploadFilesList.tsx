@@ -9,7 +9,7 @@ export default function UploadedFilesList({ files, uploads, handleRemoveFile }: 
           {files.map((file, index: number) => (
             <li
               key={index}
-              className={`border ${uploads[file.fileId]?.status === 'success' ? 'border-green-400' : 'border'} flex justify-between w-80 p-2 rounded-md mb-2`}
+              className={`border max-w-60 md:max-w-79 ${uploads[file.fileId]?.status === 'success' ? 'border-green-400' : 'border'} flex justify-between w-80 p-2 rounded-md mb-2`}
             >
               <div>
                 <span className="block">{file.fileName}</span>

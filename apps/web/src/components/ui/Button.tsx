@@ -11,7 +11,7 @@ export default function Button({
 }) {
   return (
     <button
-      className={`border w-full p-2 text-white ${className} ${disabled ? 'cursor-not-allowed' : 'cursor-pointer'}`}
+      className={`border w-full p-2 ${className} ${disabled ? 'cursor-not-allowed' : 'cursor-pointer'}`}
       disabled={disabled}
       onClick={handleClick}
     >

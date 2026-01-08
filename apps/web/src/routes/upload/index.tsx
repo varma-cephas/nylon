@@ -52,13 +52,13 @@ function RouteComponent() {
       >
         <PickFile handleFileSelect={handleFileSelect}  />
       </div>
-      <div className="space-y-2 mx-auto w-[fit-content]">
+      <div className="space-y-2 mx-auto w-[fit-content] border">
         <UploadedFilesList files={files} setFiles={setFiles} handleRemoveFile={handleRemoveFile} uploads={uploads} />
         <div className="space-x-2 flex gap-2 ">
-          <Button name='Cancel' className={`border text-purple-600 ${files?.length? "block" : "hidden"} border-gray-500 font-bold rounded-md`} />
+          <Button name='Cancel' className={`border text-black ${files?.length? "block" : "hidden"} border-gray-500 font-bold rounded-md`} />
           <Button
             name="Upload files"
-            className={`rounded-md bg-black ${files?.length? "block" : "hidden"} font-bold `}
+            className={`rounded-md bg-black text-white ${files?.length? "block" : "hidden"} font-bold `}
             disabled={!files?.length || isPending}
             handleClick={handleUploadFiles}
             />

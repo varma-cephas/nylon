@@ -15,7 +15,8 @@ export default function PickFile({handleFileSelect}: {handleFileSelect: (event: 
         className="hidden"
       />
       <p className='text-gray-600 pt-2'>
-        Drag files here or <label className="underline pl-1 cursor-pointer" htmlFor="browseFile">Browse.</label>
+        Drag files here or 
+        <label className="underline pl-1 cursor-pointer" htmlFor="browseFile">Browse.</label>
       </p>
       </div>
     </>
