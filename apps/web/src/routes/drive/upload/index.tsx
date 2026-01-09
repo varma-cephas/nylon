@@ -9,7 +9,7 @@ import UploadedFilesList from '@/components/ui/UploadFilesList'
 import { useFile } from '@/hooks/useFile'
 
 
-export const Route = createFileRoute('/upload/')({
+export const Route = createFileRoute('/drive/upload/')({
   component: RouteComponent,
 })
 
@@ -43,9 +43,15 @@ function RouteComponent() {
     }
   return (
     <>
-      {/* <div className="flex items-center justify-between border-b pb-4 sticky top-0">
-        <h2 className="text-xl font-semibold">nylon</h2>
-      </div> */}
+      <header className="flex items-center justify-between border-b sticky top-0">
+        {/* <h2 className="text-xl font-semibold">nylon</h2> */}
+        {/* <nav>
+          <ul className='flex gap-2'>
+            <li>Upload</li>
+            <li>Drive</li>
+          </ul>
+        </nav> */}
+      </header>
       <DragDrop handleFileDrop={handleFileDrop} hanldeDragOver={hanldeDragOver} handleDragEnter={handleDragEnter} handleDragLeave={handleDragLeave}>
       <div
         className={`border-3 border-dashed min-w-[80%] pt-18 mx-auto rounded-xl p-8 flex flex-col items-center ${isDragging ? 'border-sky-400' : 'border-gray-400'}`}
@@ -55,7 +61,7 @@ function RouteComponent() {
       <div className="mx-auto min-w-[70%]">
         <UploadedFilesList files={files} setFiles={setFiles} handleRemoveFile={handleRemoveFile} uploads={uploads} />
         <div className="space-x-2 flex gap-2 ">
-          <Button name='Cancel' handleClick={handleCancelUpload} className={`border text-black ${files?.length? "block" : "hidden"} border-gray-500 font-bold rounded-md`} />
+          <Button name='Cancel All' handleClick={handleCancelUpload} className={`border text-black ${files?.length? "block" : "hidden"} border-gray-500 rounded-md`} />
           <Button
             name="Upload files"
             className={`rounded-md bg-black text-white ${files?.length? "block" : "hidden"} font-bold `}
