@@ -3,7 +3,7 @@ import { UploadCloudIcon } from 'lucide-react'
 export default function PickFile({handleFileSelect}: {handleFileSelect: (event: React.ChangeEvent<EventTarget>) => void}) {
   return (
     <>
-      <label className='border p-2 rounded-lg cursor-pointer' htmlFor='browseFile'>
+      <label className='border border-gray-400 p-2 rounded-lg cursor-pointer' htmlFor='browseFile'>
         <UploadCloudIcon />
       </label>
       <div className='pt-2'>

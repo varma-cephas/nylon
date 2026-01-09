@@ -16,7 +16,7 @@ export const Route = createFileRoute('/upload/')({
 function RouteComponent() {
   const { mutateAsync, isPending, isError } = useFileMetaDataUpload()
   const { mutateAsync: uploadFiles, uploads } = useFilesUpload()
-  const { handleRemoveFile, handleFileDrop, hanldeDragOver, handleDragEnter, handleDragLeave, handleFileSelect, files, setFiles, isDragging} = useFile()
+  const { handleRemoveFile, handleFileDrop, hanldeDragOver, handleDragEnter, handleCancelUpload, handleDragLeave, handleFileSelect, files, setFiles, isDragging} = useFile()
 
    async function handleUploadFiles() {
       const filesReadyForUpload: Array<FilesType> = []
@@ -43,19 +43,19 @@ function RouteComponent() {
     }
   return (
     <>
-      <div className="flex items-center justify-between border-b pb-4 sticky top-0">
+      {/* <div className="flex items-center justify-between border-b pb-4 sticky top-0">
         <h2 className="text-xl font-semibold">nylon</h2>
-      </div>
+      </div> */}
       <DragDrop handleFileDrop={handleFileDrop} hanldeDragOver={hanldeDragOver} handleDragEnter={handleDragEnter} handleDragLeave={handleDragLeave}>
       <div
-        className={`border-2 border-dashed min-w-[70%] pt-18 mx-auto rounded-xl p-8 flex flex-col items-center ${isDragging ? 'border-sky-400' : 'border-gray-400'}`}
+        className={`border-3 border-dashed min-w-[70%] pt-18 mx-auto rounded-xl p-8 flex flex-col items-center ${isDragging ? 'border-sky-400' : 'border-gray-400'}`}
       >
         <PickFile handleFileSelect={handleFileSelect}  />
       </div>
-      <div className="space-y-2 mx-auto w-[fit-content] border">
+      <div className="mx-auto w-[fit-content]">
         <UploadedFilesList files={files} setFiles={setFiles} handleRemoveFile={handleRemoveFile} uploads={uploads} />
         <div className="space-x-2 flex gap-2 ">
-          <Button name='Cancel' className={`border text-black ${files?.length? "block" : "hidden"} border-gray-500 font-bold rounded-md`} />
+          <Button name='Cancel' handleClick={handleCancelUpload} className={`border text-black ${files?.length? "block" : "hidden"} border-gray-500 font-bold rounded-md`} />
           <Button
             name="Upload files"
             className={`rounded-md bg-black text-white ${files?.length? "block" : "hidden"} font-bold `}

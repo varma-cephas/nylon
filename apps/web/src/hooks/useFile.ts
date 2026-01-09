@@ -82,5 +82,9 @@ export function useFile(){
       return updatedFiles
     })
   }
-return { files, handleFileDrop,hanldeDragOver, isDragging, handleDragEnter, handleFileSelect, handleRemoveFile, handleDragLeave, setFiles}
+
+  function handleCancelUpload(){
+    setFiles(null)
+  }
+return { files, handleFileDrop,hanldeDragOver, handleCancelUpload, isDragging, handleDragEnter, handleFileSelect, handleRemoveFile, handleDragLeave, setFiles}
 }
