@@ -48,11 +48,11 @@ function RouteComponent() {
       </div> */}
       <DragDrop handleFileDrop={handleFileDrop} hanldeDragOver={hanldeDragOver} handleDragEnter={handleDragEnter} handleDragLeave={handleDragLeave}>
       <div
-        className={`border-3 border-dashed min-w-[70%] pt-18 mx-auto rounded-xl p-8 flex flex-col items-center ${isDragging ? 'border-sky-400' : 'border-gray-400'}`}
+        className={`border-3 border-dashed min-w-[80%] pt-18 mx-auto rounded-xl p-8 flex flex-col items-center ${isDragging ? 'border-sky-400' : 'border-gray-400'}`}
       >
         <PickFile handleFileSelect={handleFileSelect}  />
       </div>
-      <div className="mx-auto w-[fit-content]">
+      <div className="mx-auto min-w-[70%]">
         <UploadedFilesList files={files} setFiles={setFiles} handleRemoveFile={handleRemoveFile} uploads={uploads} />
         <div className="space-x-2 flex gap-2 ">
           <Button name='Cancel' handleClick={handleCancelUpload} className={`border text-black ${files?.length? "block" : "hidden"} border-gray-500 font-bold rounded-md`} />

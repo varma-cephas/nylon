@@ -9,12 +9,12 @@ export default function UploadedFilesList({ files, uploads, handleRemoveFile }: 
       {files && files.length ? (
         <>
         <div>Files: {files.length}</div>
-        <div className='max-h-[350px] px-16 py-2 mb-2 border rounded-md overflow-y-auto divide-y divide-slate-100'>
+        <div className='max-h-[350px] lg:px-16 py-2 mb-2  lg:border rounded-md overflow-y-auto divide-y divide-slate-100'>
         <ul>
           {files.map((file, index: number) => (
             <li
               key={index}
-              className={`border border-gray-400 max-w-60 md:max-w-79 ${uploads[file.fileId]?.status === 'success' ? 'border-green-400' : 'border'} flex justify-between w-80 p-1.5 rounded-md mb-2 duration-300 ease-in-out `}
+              className={`border border-gray-400 max-w-70 w-80 md:w-full md:max-w-full ${uploads[file.fileId]?.status === 'success' ? 'border-green-400' : 'border'} flex justify-between  p-1.5 rounded-md mb-2 duration-300 ease-in-out `}
             >
               <div className='flex gap-2 items-center'>
                 <File className='border h-[80%] border-gray-400 rounded-sm p-0.5' />
@@ -48,7 +48,7 @@ export default function UploadedFilesList({ files, uploads, handleRemoveFile }: 
         </div>
         </>
       ) : (
-        <p>No files yet</p>
+        <p className='text-center'>No files yet</p>
       )}
     </div>
   )
