@@ -28,7 +28,7 @@ export function useFilesUpload() {
                   const percent = Math.round((progressEvent.loaded * 100) / total);
 
                   setUploads((prev) => {
-                    if (prev[fileData.fileId]?.progress === percent) return prev;
+                    if (prev[fileData.fileId]?.progress === percent && prev[fileData.fileId]?.status === 'uploading') return prev;
                     return {
                       ...prev,
                       [fileData.fileId]: { 
@@ -47,6 +47,7 @@ export function useFilesUpload() {
               [fileData.fileId]: { progress: 100, status: 'success' },
             }));
 
+            console.info(fileData)
             return { status: 'success', fileId: fileData.fileId };
           } catch (err) {
             setUploads((prev) => ({
@@ -57,7 +58,6 @@ export function useFilesUpload() {
           }
         });
       });
-
       return Promise.all(uploadTasks);
     },
   });

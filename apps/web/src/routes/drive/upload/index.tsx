@@ -24,21 +24,27 @@ function RouteComponent() {
       if (files !== null && files.length >= 1) {
         await mutateAsync(files, {
           onSuccess: data => {
-            const filesWithPresignUrl: Array<FilesType> = files.map(file => {
-              const presignedUrl =
-                data.files.find(
-                  signedFile => file.fileName === signedFile.fileName
-                )?.presignedUrl || ''
+            const newServerDataMap = new Map(
+              data.files.map(file => [file.fileName, {id: file.fileId, url: file.presignedUrl}])
+            )
+            console.info(newServerDataMap)
+            const filesWithPresignUrl:   Array<FilesType> = files.map(file => {
+              const newServerInfo = newServerDataMap.get(file.fileName)
               return {
                 ...file,
-                presignedUrl,
+                fileId: newServerInfo?.id || '',
+                presignedUrl: newServerInfo?.url || ''
               }
             })
             setFiles(filesWithPresignUrl)
             filesReadyForUpload.push(...filesWithPresignUrl)
           },
         })
-        await uploadFiles(filesReadyForUpload)
+        await uploadFiles(filesReadyForUpload, {
+          onSuccess: data => {
+            console.info(data)
+          },
+        })
         return
       }
     }
