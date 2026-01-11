@@ -1,8 +1,23 @@
-import { useState, type ChangeEvent } from 'react'
+import { createContext, useState, type ChangeEvent  } from 'react'
 import type { DragEvent } from 'react'
-import type { FilesType } from '@/types/Files'
+import type { FilesContextType, FilesType } from '@/types/Files'
+import type { Children } from '@/types/GeneralTypes'
 
-export function useFile(){
+export const Files = createContext<FilesContextType>(
+  { handleRemoveFile: () => {}, 
+    handleFileDrop: () => {}, 
+    hanldeDragOver: () => {},
+    handleDragEnter: () => {},
+    handleCancelUpload: () => {},
+    handleDragLeave: () => {}, 
+    handleFileSelect: () => {},
+    files: [], 
+    setFiles: () => {}, 
+    isDragging: false ,
+  }
+)
+
+export default function FilesContext({ children }: Children) {
   const [files, setFiles] = useState<Array<FilesType> | null>(null)
   const [isDragging, setIsDragging] = useState(false)
 
@@ -37,7 +52,6 @@ export function useFile(){
     }
   }
 
-  // useEffect(()=>{console.info(files)}, [files])
   const handleFileSelect = (event: ChangeEvent<EventTarget>) => {
     if (event.target instanceof HTMLInputElement) {
       if (event.target.files) {
@@ -86,5 +100,9 @@ export function useFile(){
   function handleCancelUpload(){
     setFiles(null)
   }
-return { files, handleFileDrop,hanldeDragOver, handleCancelUpload, isDragging, handleDragEnter, handleFileSelect, handleRemoveFile, handleDragLeave, setFiles}
+  return(
+    <Files.Provider value={{files, handleFileDrop,hanldeDragOver, handleCancelUpload, isDragging, handleDragEnter, handleFileSelect, handleRemoveFile, handleDragLeave, setFiles}}>
+      {children}
+    </Files.Provider>
+  )
 }

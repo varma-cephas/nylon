@@ -6,7 +6,8 @@ import { useFilesUpload } from '@/hooks/useFileUpload'
 import type { FilesType } from '@/types/Files'
 import PickFile from '@/components/ui/PickFile'
 import UploadedFilesList from '@/components/ui/UploadFilesList'
-import { useFile } from '@/hooks/useFile'
+import { useContext } from 'react'
+import { Files } from '@/context/Files'
 
 
 export const Route = createFileRoute('/drive/upload/')({
@@ -16,7 +17,7 @@ export const Route = createFileRoute('/drive/upload/')({
 function RouteComponent() {
   const { mutateAsync, isPending, isError } = useFileMetaDataUpload()
   const { mutateAsync: uploadFiles, uploads } = useFilesUpload()
-  const { handleRemoveFile, handleFileDrop, hanldeDragOver, handleDragEnter, handleCancelUpload, handleDragLeave, handleFileSelect, files, setFiles, isDragging} = useFile()
+  const { handleRemoveFile, handleFileDrop, hanldeDragOver, handleDragEnter, handleCancelUpload, handleDragLeave, handleFileSelect, files, setFiles, isDragging} = useContext(Files)
 
    async function handleUploadFiles() {
       const filesReadyForUpload: Array<FilesType> = []
@@ -43,15 +44,6 @@ function RouteComponent() {
     }
   return (
     <>
-      <header className="flex items-center justify-between border-b sticky top-0">
-        {/* <h2 className="text-xl font-semibold">nylon</h2> */}
-        {/* <nav>
-          <ul className='flex gap-2'>
-            <li>Upload</li>
-            <li>Drive</li>
-          </ul>
-        </nav> */}
-      </header>
       <DragDrop handleFileDrop={handleFileDrop} hanldeDragOver={hanldeDragOver} handleDragEnter={handleDragEnter} handleDragLeave={handleDragLeave}>
       <div
         className={`border-3 border-dashed min-w-[80%] pt-18 mx-auto rounded-xl p-8 flex flex-col items-center ${isDragging ? 'border-sky-400' : 'border-gray-400'}`}

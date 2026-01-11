@@ -1,15 +1,15 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { PresignUrlService } from './presign-url.service';
+import { FilesService } from './files.service';
 
-describe('PresignUrlService', () => {
-  let service: PresignUrlService;
+describe('FilesService', () => {
+  let service: FilesService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [PresignUrlService],
+      providers: [FilesService],
     }).compile();
 
-    service = module.get<PresignUrlService>(PresignUrlService);
+    service = module.get<FilesService>(FilesService);
   });
 
   it('should be defined', () => {
