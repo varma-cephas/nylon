@@ -2,11 +2,15 @@ import { useMutation } from '@tanstack/react-query'
 import axios from 'axios'
 import plimit from 'p-limit'
 import type { FilesType } from '@/types/Files'
-import { useState } from 'react'
+import { useContext, useRef } from 'react'
+import { Files } from '@/context/Files'
 
 export function useFilesUpload() {
+  const {setUploads, uploads, confirmUpload} = useContext(Files)
+  const { mutation:confirmFilesMutation } = confirmUpload()
   const limit = plimit(3)
-  const [uploads, setUploads] = useState<{[key: string]: { progress: number, status: string }}>({})
+  const batchSize = 10
+  const successUploads = useRef<string []>([])
   const mutation = useMutation({
     mutationFn: async (files:  Array<FilesType>) => {
       const uploadTasks = files.map((fileData) => {
@@ -46,6 +50,13 @@ export function useFilesUpload() {
               ...prev,
               [fileData.fileId]: { progress: 100, status: 'success' },
             }));
+
+            successUploads.current.push(fileData.fileId)
+            if(successUploads.current.length >= batchSize){
+              const confirmFiles = [...successUploads.current]
+              successUploads.current = []
+              confirmFilesMutation(confirmFiles)
+            }
             
             return { status: 'success', fileId: fileData.fileId };
           } catch (err) {

@@ -1,25 +1,17 @@
 import { createContext, useState, type ChangeEvent  } from 'react'
+import { useMutation } from '@tanstack/react-query'
 import type { DragEvent } from 'react'
 import type { FilesContextType, FilesType } from '@/types/Files'
 import type { Children } from '@/types/GeneralTypes'
+import { api } from '@/api/axios'
 
-export const Files = createContext<FilesContextType>(
-  { handleRemoveFile: () => {}, 
-    handleFileDrop: () => {}, 
-    hanldeDragOver: () => {},
-    handleDragEnter: () => {},
-    handleCancelUpload: () => {},
-    handleDragLeave: () => {}, 
-    handleFileSelect: () => {},
-    files: [], 
-    setFiles: () => {}, 
-    isDragging: false ,
-  }
-)
+export const Files = createContext<FilesContextType | undefined>(undefined)
 
 export default function FilesContext({ children }: Children) {
   const [files, setFiles] = useState<Array<FilesType> | null>(null)
   const [isDragging, setIsDragging] = useState(false)
+  const [uploads, setUploads] = useState<{[key: string]: { progress: number, status: string }}>({})
+
 
   const handleFileDrop = (event: DragEvent) => {
     event.preventDefault()
@@ -89,6 +81,7 @@ export default function FilesContext({ children }: Children) {
   const hanldeDragOver = (event: DragEvent) => {
     event.preventDefault()
   }
+
   function handleRemoveFile(fileIndex: number) {
     setFiles(prevFiles => {
       if (!prevFiles) return []
@@ -97,11 +90,28 @@ export default function FilesContext({ children }: Children) {
     })
   }
 
+  const confirmUpload =  useMutation({
+      mutationFn: (id: string []) => api.post('/files/confirm-upload', {id}),
+      onSuccess: (response) =>{
+        const data: string [] = response.data
+        setUploads( prev => {
+          const newState = { ...prev }
+          data.forEach( id => {
+            if(newState[id]){
+              newState[id].status = "saved"
+            }
+          })
+          return newState
+        })
+      }
+    })
+
+
   function handleCancelUpload(){
     setFiles(null)
   }
   return(
-    <Files.Provider value={{files, handleFileDrop,hanldeDragOver, handleCancelUpload, isDragging, handleDragEnter, handleFileSelect, handleRemoveFile, handleDragLeave, setFiles}}>
+    <Files.Provider value={{files, handleFileDrop,hanldeDragOver, handleCancelUpload, isDragging, handleDragEnter, handleFileSelect, handleRemoveFile, handleDragLeave, setFiles, uploads, setUploads, confirmUpload}}>
       {children}
     </Files.Provider>
   )
