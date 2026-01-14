@@ -1,4 +1,4 @@
-import { createContext, useState, type ChangeEvent  } from 'react'
+import { createContext, useContext, useState, type ChangeEvent  } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import type { DragEvent } from 'react'
 import type { FilesContextType, FilesType } from '@/types/Files'
@@ -7,7 +7,7 @@ import { api } from '@/api/axios'
 
 export const Files = createContext<FilesContextType | undefined>(undefined)
 
-export default function FilesContext({ children }: Children) {
+export function FilesProvider({ children }: Children) {
   const [files, setFiles] = useState<Array<FilesType> | null>(null)
   const [isDragging, setIsDragging] = useState(false)
   const [uploads, setUploads] = useState<{[key: string]: { progress: number, status: string }}>({})
@@ -116,3 +116,11 @@ export default function FilesContext({ children }: Children) {
     </Files.Provider>
   )
 }
+
+export  function useFiles() {
+  const context = useContext(Files)
+  if(context === undefined){
+    throw new Error('useFile must be used in a FilesProvider')
+  }
+  return context
+} 

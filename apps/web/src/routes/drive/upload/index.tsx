@@ -6,8 +6,7 @@ import { useFilesUpload } from '@/hooks/useFileUpload'
 import type { FilesType } from '@/types/Files'
 import PickFile from '@/components/ui/PickFile'
 import UploadedFilesList from '@/components/ui/UploadFilesList'
-import { useContext } from 'react'
-import { Files } from '@/context/Files'
+import { useFiles } from '@/context/Files'
 
 
 export const Route = createFileRoute('/drive/upload/')({
@@ -17,7 +16,7 @@ export const Route = createFileRoute('/drive/upload/')({
 function RouteComponent() {
   const { mutateAsync, isPending, isError } = useFileMetaDataUpload()
   const { mutateAsync: uploadFiles, uploads } = useFilesUpload()
-  const { handleRemoveFile, handleFileDrop, hanldeDragOver, handleDragEnter, handleCancelUpload, handleDragLeave, handleFileSelect, files, setFiles, isDragging} = useContext(Files)
+  const { handleRemoveFile, handleFileDrop, hanldeDragOver, handleDragEnter, handleCancelUpload, handleDragLeave, handleFileSelect, files, setFiles, isDragging} = useFiles()
 
    async function handleUploadFiles() {
       const filesReadyForUpload: Array<FilesType> = []

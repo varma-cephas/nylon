@@ -1,4 +1,4 @@
-import FilesContext from '@/context/Files'
+import {FilesProvider} from '@/context/Files'
 import { createFileRoute, Link, Outlet } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/drive')({
@@ -7,7 +7,7 @@ export const Route = createFileRoute('/drive')({
 
 function DriveComponent() {
   return(
-    <FilesContext>
+    <FilesProvider>
       <div>
       <header className="flex bg-black text-white items-center justify-between border-b sticky top-0">
         <h1>Drive</h1>
@@ -20,6 +20,6 @@ function DriveComponent() {
       </div>
       <Outlet/>
     </div>
-    </FilesContext>
+    </FilesProvider>
   )
 }

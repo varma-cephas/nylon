@@ -11,5 +11,8 @@ export class FilesService {
       data.files.forEach(file => this.cacheService.put(file.fileId, file, {expirationTtl: null}))
       return data
     }
+    async confirmUpload(fileIds: string []){
+      return fileIds
+    }
 }
 

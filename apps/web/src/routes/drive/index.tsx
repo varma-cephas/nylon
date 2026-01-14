@@ -1,13 +1,12 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { useContext } from 'react'
-import { Files } from '@/context/Files'
+import { useFiles } from '@/context/Files'
 
 export const Route = createFileRoute('/drive/')({
   component: RouteComponent,
 })
 
 function RouteComponent() {
-  const { files } = useContext(Files)
+  const { files } = useFiles()
   return(
     <>
       {

@@ -10,4 +10,8 @@ export class FilesController {
       const filesWithPresignUrl: ReceiveFileMetadataWithPresignUrlDto = await this.filesService.addPresignUrlToFilesMetadata(filesMetaData)
       return filesWithPresignUrl;
     }
+    @Post('confirm-upload')
+    async receiveUploadConfirmation(@Body() fileIds: string []){
+      return this.filesService.confirmUpload(fileIds)
+    }
 }
