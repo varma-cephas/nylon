@@ -9,7 +9,6 @@ export class CacheService implements IKVStore {
     async put(key:string, value: FileMetaDataDBInsert, options: {expirationTtl: number}){
         const expires = options.expirationTtl ? Date.now() + options.expirationTtl * 1000 : null
         this.store.set(key, {value, expires})
-        // console.info(this.store)
     }
 
     async get(key: string){
