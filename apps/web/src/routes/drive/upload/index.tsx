@@ -39,8 +39,8 @@ function RouteComponent() {
           },
         })
         await uploadFiles(filesReadyForUpload, {
-          onSuccess: data => {
-            console.info(data)
+          onSuccess: () => {
+            setFiles(null)
           },
         })
         return
