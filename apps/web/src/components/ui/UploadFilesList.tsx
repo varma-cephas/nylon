@@ -48,7 +48,7 @@ export default function UploadedFilesList({ files, uploads, handleRemoveFile }: 
         </div>
         </>
       ) : (
-        <p className='text-center'>No files yet</p>
+        <p className='text-center italic text-gray-500'>file list is empty</p>
       )}
     </div>
   )
