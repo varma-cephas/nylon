@@ -17,17 +17,12 @@ Getting Started
 pnpm install
 ```
 2. Environment
-Create a .env in packages/api:
-
-DATABASE_URL: Postgres connection string.
-
-R2_ACCESS_KEY_ID / R2_SECRET_ACCESS_KEY: Cloudflare credentials.
-
-R2_ENDPOINT: S3-compatible endpoint.
-
+- Create a .env in packages/api:
+- DATABASE_URL: Postgres connection string.
+- R2_ACCESS_KEY_ID / R2_SECRET_ACCESS_KEY: Cloudflare credentials.
+- R2_ENDPOINT: S3-compatible endpoint.
 3. Database Migrations
 To start adding or fetching files from the DB, ensure you run:
-
 ```Bash
 # This generates the migration scripts
 drizzle-kit generate
@@ -41,7 +36,7 @@ pnpm run start:migra-gen
 pnpm run dev
 ```
 
-Structure
+5. Structure
 apps/frontend: React + TanStack Query + Tailwind.
 packages/api: NestJS + Drizzle + AWS SDK (S3).
 packages/typescript-config: Shared tsconfig base.
