@@ -37,7 +37,6 @@ export class PresignUrlService {
             }
         })
         )
-        console.info(filesWithPresignUrl)
         return {files: filesWithPresignUrl}
     }
 }
