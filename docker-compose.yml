@@ -1,9 +1,8 @@
-service:
+services:
   postgres:
-    image: postgres
-    port: 5432:5432
-  enviroment:
-    POSTGRES_PASSWORD: nylonexample
-    POSTGRES_DB: nylon_db
-
-    
+    image: postgres:15-alpine
+    ports: 
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: nylonexample
+      POSTGRES_DB: nylon_db

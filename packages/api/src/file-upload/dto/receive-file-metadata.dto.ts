@@ -20,6 +20,11 @@ export class FileMetaDataWithPresignUrlDTO extends FileMetaDataDTO {
   presignedUrl: string
 }
 
+export class FileMetaDataDBInsert extends FileMetaDataDTO {
+  fileId: string
+  storageKey: string
+}
+
 export class ReceiveFileMetadataDto {
   @IsArray()
   @ValidateNested({ each: true })

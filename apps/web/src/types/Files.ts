@@ -1,4 +1,6 @@
 import type { FileMetaDataWithPresignUrlDTO } from '@repo/api'
+import { type UseMutationResult } from '@tanstack/react-query'
+import { type AxiosResponse } from 'axios'
 import type { Dispatch, SetStateAction, ChangeEvent } from 'react'
 import type { DragEvent } from 'react'
 import type { Children } from './GeneralTypes'
@@ -30,4 +32,6 @@ export interface FilesContextType extends FileListType, DragDropType {
   isDragging: boolean
   handleFileSelect: (event: ChangeEvent<EventTarget>) => void
   handleRemoveFile: (index: number) => void
+  setUploads: Dispatch<SetStateAction<{[key: string]: { progress: number, status: string }}>>
+  confirmUpload: UseMutationResult<AxiosResponse<any, any, {}>, Error, string[], unknown>  
 }

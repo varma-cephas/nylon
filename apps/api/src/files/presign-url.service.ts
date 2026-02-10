@@ -1,35 +1,24 @@
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
-import { Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
+import { Inject, Injectable } from '@nestjs/common';
 import { ReceiveFileMetadataDto, ReceiveFileMetadataWithPresignUrlDto } from '@repo/api';
+import { BUCKET_NAME, S3_CONNECTION } from 'src/s3/s3.connection';
 import {v4 as uuidv4} from "uuid"
 
 @Injectable()
 export class PresignUrlService {
-    private readonly s3Client: S3Client
-    private readonly bucketName: string
-    constructor(private configService: ConfigService) {
-        this.s3Client = new S3Client({
-            region: 'auto',
-            endpoint: `https://${this.configService.getOrThrow('R2_ACCOUNT_ID')}.r2.cloudflarestorage.com`,
-            credentials: {
-                accessKeyId: this.configService.getOrThrow('ACCESS_KEY_ID'),
-                secretAccessKey: this.configService.getOrThrow('SECRET_ACCESS_KEY')
-            }
-        })
-        this.bucketName = this.configService.getOrThrow('BUCKET_NAME')
-    }
+    constructor(@Inject(S3_CONNECTION) private readonly s3Connection: S3Client, @Inject(BUCKET_NAME) private readonly bucketName: string) {}
+
     private async presignUrl(fileName: string, fileType:string, fileSize: number){
         const fileId = uuidv4()
-        const uniqueFileKey = `${uuidv4()}-${fileName}`
+        const uniqueFileKey = `${fileId}-${fileName}`
         const command = new PutObjectCommand({
             Bucket: this.bucketName,
             Key: uniqueFileKey,
             ContentType: fileType,
             ContentLength: fileSize
         })
-        const url = await getSignedUrl(this.s3Client, command, {expiresIn: 30})
+        const url = await getSignedUrl(this.s3Connection, command, {expiresIn: 30})
         return {
             url: url,
             fileId: fileId,

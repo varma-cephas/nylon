@@ -10,9 +10,6 @@
     "build": "turbo run build",
     "test": "turbo run test",
     "start:db": "docker compose up -d",
-    "start:db:down": "docker compose down",
-    "start:migra-gen": "drizzle-kit generate",
-    "start:migra": "drizzle-kit migrate",
     "test:e2e": "turbo run test:e2e",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""

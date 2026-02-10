@@ -18,6 +18,7 @@ import { Pool } from 'pg';
             },
             inject: [ConfigService]
         }
-    ]
+    ],
+    exports: [DATABASE_CONNECTION]
 })
 export class DatabaseModule {}
