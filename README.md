@@ -5,7 +5,7 @@ A lightweight file storage system. High-performance streaming to Cloudflare R2, 
 Key Architecture
 Hybrid Storage: Files go to R2; metadata stays in Postgres.
 
-In-Memory Cache: Uses NestJS CacheModule to handle temporary file state during uploads (no Redis required).
+In-Memory Cache: Uses NestJS CacheModule to handle temporary file state during uploads.
 
 Type Safety: Shared DTOs between API and Frontend via internal workspace packages.
 
@@ -16,21 +16,20 @@ Getting Started
 ```Bash
 pnpm install
 ```
-2. Environment
-Create a .env in packages/api:
+2. Environment variables
+Create a .env in apps/api directory the based on the `.env.example` file.
 
-DATABASE_URL: Postgres connection string.
-
-R2_ACCESS_KEY_ID / R2_SECRET_ACCESS_KEY: Cloudflare credentials.
-
-R2_ENDPOINT: S3-compatible endpoint.
+3. Start the database
+```Bash
+pnpm run start:db
+```
 
 3. Database Migrations
 To start adding or fetching files from the DB, ensure you run:
 
 ```Bash
 # This generates the migration scripts
-drizzle-kit generate
+pnpm run start:migra
 
 # This starts the actual migration
 pnpm run start:migra-gen
@@ -43,5 +42,6 @@ pnpm run dev
 
 Structure
 apps/frontend: React + TanStack Query + Tailwind.
-packages/api: NestJS + Drizzle + AWS SDK (S3).
+apps/api: NestJS + Drizzle + AWS SDK (S3).
 packages/typescript-config: Shared tsconfig base.
+packages/api: Shared types.

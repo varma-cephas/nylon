@@ -8,7 +8,6 @@
     "start": "nest start",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
-    "start:db:down": "docker compose down",
     "start:migra": "drizzle-kit migrate",
     "start:migra-gen": "drizzle-kit generate",
     "test": "jest",
