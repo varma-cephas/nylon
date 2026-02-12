@@ -1,17 +1,14 @@
 # nylon drive
 
-A lightweight file storage system. High-performance streaming to Cloudflare R2, PostgreSQL for metadata, and a Vite frontend.
+A lightweight file storage system. High-performance streaming to Cloudflare R2, PostgreSQL for metadata, and a React frontend.
 
-Key Architecture
-Hybrid Storage: Files go to R2; metadata stays in Postgres.
+### Architecture
+ - Hybrid Storage: Files go to R2; metadata stays in Postgres.
+ - In-Memory Cache: Uses NestJS CacheModule to handle temporary file state during uploads.
+ - Type Safety: Shared DTOs between API and Frontend via internal workspace packages.
+ - RBAC: Simple role column in the user table with NestJS Guards for Admin/User access.
 
-In-Memory Cache: Uses NestJS CacheModule to handle temporary file state during uploads.
-
-Type Safety: Shared DTOs between API and Frontend via internal workspace packages.
-
-RBAC: Simple role column in the user table with NestJS Guards for Admin/User access.
-
-Getting Started
+### Getting Started
 1. Install dependencies
 ```Bash
 pnpm install
@@ -40,8 +37,13 @@ pnpm run start:migra-gen
 pnpm run dev
 ```
 
-Structure
-apps/frontend: React + TanStack Query + Tailwind.
-apps/api: NestJS + Drizzle + AWS SDK (S3).
-packages/typescript-config: Shared tsconfig base.
-packages/api: Shared types.
+5. Stop DB
+```Bash
+pnpm run start:db:down
+```
+
+### Structure
+  - apps/frontend: React + TanStack Query + Tailwind.
+  - apps/api: NestJS + Drizzle + AWS SDK (S3).
+  - packages/typescript-config: Shared tsconfig base.
+  - packages/api: Shared types.
