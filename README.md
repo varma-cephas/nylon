@@ -22,7 +22,7 @@ pnpm run start:db
 ```
 
 3. Database Migrations
-To start adding or fetching files from the DB, ensure you run:
+To start adding or fetching files from the DB, ensure you `cd` **into the apps/api directory** and run:
 
 ```Bash
 # This generates the migration scripts
