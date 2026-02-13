@@ -7,61 +7,107 @@ import PickFile from '@/components/ui/PickFile'
 import UploadedFilesList from '@/components/ui/UploadFilesList'
 import { useFiles } from '@/context/Files'
 
+export default function DragDropPage() {
+  const { mutateAsync, isPending, isError } =
+    useFileMetaDataUpload()
+  const { mutateAsync: uploadFiles, uploads } =
+    useFilesUpload()
+  const {
+    handleRemoveFile,
+    handleFileDrop,
+    hanldeDragOver,
+    handleDragEnter,
+    handleCancelUpload,
+    handleDragLeave,
+    handleFileSelect,
+    files,
+    setFiles,
+    isDragging,
+  } = useFiles()
 
-export default function DragDropPage(){
-  const { mutateAsync, isPending, isError } = useFileMetaDataUpload()
-  const { mutateAsync: uploadFiles, uploads } = useFilesUpload()
-  const { handleRemoveFile, handleFileDrop, hanldeDragOver, handleDragEnter, handleCancelUpload, handleDragLeave, handleFileSelect, files, setFiles, isDragging} = useFiles()
-
-   async function handleUploadFiles() {
-      const filesReadyForUpload: Array<FilesType> = []
-      if (files !== null && files.length >= 1) {
-        await mutateAsync(files, {
-          onSuccess: data => {
-            const newServerDataMap = new Map(
-              data.files.map(file => [file.fileName, {id: file.fileId, url: file.presignedUrl}])
-            )
-            const filesWithPresignUrl:   Array<FilesType> = files.map(file => {
-              const newServerInfo = newServerDataMap.get(file.fileName)
+  async function handleUploadFiles() {
+    const filesReadyForUpload: Array<FilesType> =
+      []
+    if (files !== null && files.length >= 1) {
+      await mutateAsync(files, {
+        onSuccess: data => {
+          const newServerDataMap = new Map(
+            data.files.map(file => [
+              file.fileName,
+              {
+                id: file.fileId,
+                url: file.presignedUrl,
+              },
+            ]),
+          )
+          const filesWithPresignUrl: Array<FilesType> =
+            files.map(file => {
+              const newServerInfo =
+                newServerDataMap.get(
+                  file.fileName,
+                )
               return {
                 ...file,
                 fileId: newServerInfo?.id || '',
-                presignedUrl: newServerInfo?.url || ''
+                presignedUrl:
+                  newServerInfo?.url || '',
               }
             })
-            setFiles(filesWithPresignUrl)
-            filesReadyForUpload.push(...filesWithPresignUrl)
-          },
-        })
-        await uploadFiles(filesReadyForUpload, {
-          onSuccess: () => {
-            setFiles(null)
-          },
-        })
-        return
-      }
+          setFiles(filesWithPresignUrl)
+          filesReadyForUpload.push(
+            ...filesWithPresignUrl,
+          )
+        },
+      })
+      await uploadFiles(filesReadyForUpload, {
+        onSuccess: () => {
+          setFiles(null)
+        },
+      })
+      return
     }
+  }
 
-    return(
-        <DragDrop handleFileDrop={handleFileDrop} hanldeDragOver={hanldeDragOver} handleDragEnter={handleDragEnter} handleDragLeave={handleDragLeave}>
-        <div
-            className={`border-3 border-dashed min-w-[80%] pt-18 mx-auto rounded-xl p-8 flex flex-col items-center ${isDragging ? 'border-sky-400' : 'border-gray-400'}`}
-        >
-            <PickFile handleFileSelect={handleFileSelect}  />
+  return (
+    <DragDrop
+      handleFileDrop={handleFileDrop}
+      hanldeDragOver={hanldeDragOver}
+      handleDragEnter={handleDragEnter}
+      handleDragLeave={handleDragLeave}
+    >
+      <div
+        className={`border-3 border-dashed min-w-[80%] pt-18 mx-auto rounded-xl p-8 flex flex-col items-center ${isDragging ? 'border-sky-400' : 'border-gray-400'}`}
+      >
+        <PickFile
+          handleFileSelect={handleFileSelect}
+        />
+      </div>
+      <div className="mx-auto min-w-[70%]">
+        <UploadedFilesList
+          files={files}
+          setFiles={setFiles}
+          handleRemoveFile={handleRemoveFile}
+          uploads={uploads}
+        />
+        <div className="space-x-2 flex gap-2 ">
+          <Button
+            name="Cancel All"
+            handleClick={handleCancelUpload}
+            className={`border text-black ${files?.length ? 'block' : 'hidden'} border-gray-500 rounded-md`}
+          />
+          <Button
+            name="Upload files"
+            className={`rounded-md bg-black text-white ${files?.length ? 'block' : 'hidden'} font-bold `}
+            disabled={!files?.length || isPending}
+            handleClick={handleUploadFiles}
+          />
         </div>
-        <div className="mx-auto min-w-[70%]">
-            <UploadedFilesList files={files} setFiles={setFiles} handleRemoveFile={handleRemoveFile} uploads={uploads} />
-            <div className="space-x-2 flex gap-2 ">
-            <Button name='Cancel All' handleClick={handleCancelUpload} className={`border text-black ${files?.length? "block" : "hidden"} border-gray-500 rounded-md`} />
-            <Button
-                name="Upload files"
-                className={`rounded-md bg-black text-white ${files?.length? "block" : "hidden"} font-bold `}
-                disabled={!files?.length || isPending}
-                handleClick={handleUploadFiles}
-                />
-            </div>
-        </div>
-        {isError && <p className="text-red-500 text-center">Upload failed</p>}
-        </DragDrop>
-    )
+      </div>
+      {isError && (
+        <p className="text-red-500 text-center">
+          Upload failed
+        </p>
+      )}
+    </DragDrop>
+  )
 }

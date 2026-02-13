@@ -8,17 +8,27 @@ import { api } from '@/api/axios'
 
 export function useFileMetaDataUpload() {
   return useMutation({
-    mutationFn: async (files: Array<FileMetaDataWithPresignUrlDTO>) => {
-      if (!files.length) throw new Error('No files were provided.')
-      const filesMetaData: ReceiveFileMetadataDto = {
-        files: files.map(file => ({
-          fileName: file.fileName,
-          fileType: file.fileType,
-          fileSize: file.fileSize,
-        })),
-      }
-      const { data }: { data: ReceiveFileMetadataWithPresignUrlDto } =
-        await api.post('/files/metadata', filesMetaData)
+    mutationFn: async (
+      files: Array<FileMetaDataWithPresignUrlDTO>,
+    ) => {
+      if (!files.length)
+        throw new Error('No files were provided.')
+      const filesMetaData: ReceiveFileMetadataDto =
+        {
+          files: files.map(file => ({
+            fileName: file.fileName,
+            fileType: file.fileType,
+            fileSize: file.fileSize,
+          })),
+        }
+      const {
+        data,
+      }: {
+        data: ReceiveFileMetadataWithPresignUrlDto
+      } = await api.post(
+        '/files/metadata',
+        filesMetaData,
+      )
       return data
     },
   })
