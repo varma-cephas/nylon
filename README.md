@@ -6,7 +6,6 @@ A lightweight file storage system. High-performance streaming to Cloudflare R2, 
  - Hybrid Storage: Files go to R2; metadata stays in Postgres.
  - In-Memory Cache: Uses NestJS CacheModule to handle temporary file state during uploads.
  - Type Safety: Shared DTOs between API and Frontend via internal workspace packages.
- - RBAC: Simple role column in the user table with NestJS Guards for Admin/User access.
 
 ### Getting Started
 1. Install dependencies
