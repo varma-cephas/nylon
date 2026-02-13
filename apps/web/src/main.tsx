@@ -1,8 +1,14 @@
 import { StrictMode } from 'react'
 import ReactDOM from 'react-dom/client'
-import { RouterProvider, createRouter } from '@tanstack/react-router'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import {FilesProvider} from '@/context/Files'
+import {
+  RouterProvider,
+  createRouter,
+} from '@tanstack/react-router'
+import {
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query'
+import { FilesProvider } from '@/context/Files'
 
 // Import the generated route tree
 import { routeTree } from './routeTree.gen'
@@ -39,7 +45,7 @@ if (rootElement && !rootElement.innerHTML) {
           <RouterProvider router={router} />
         </FilesProvider>
       </QueryClientProvider>
-    </StrictMode>
+    </StrictMode>,
   )
 }
 

@@ -1,37 +1,76 @@
 import type { FileMetaDataWithPresignUrlDTO } from '@repo/api'
 import { type UseMutationResult } from '@tanstack/react-query'
 import { type AxiosResponse } from 'axios'
-import type { Dispatch, SetStateAction, ChangeEvent } from 'react'
+import type {
+  Dispatch,
+  SetStateAction,
+  ChangeEvent,
+} from 'react'
 import type { DragEvent } from 'react'
 import type { Children } from './GeneralTypes'
-
 
 export interface FilesType extends FileMetaDataWithPresignUrlDTO {
   fileRawInfo: File
 }
 
 export interface PickFilePropTypes {
-  setFiles: Dispatch<SetStateAction<Array<FilesType> | null>>
+  setFiles: Dispatch<
+    SetStateAction<Array<FilesType> | null>
+  >
+}
+
+export interface HandleSelectFile {
+  handleFileSelect: (event: React.ChangeEvent) => void
 }
 
 export interface FileListType {
   files: Array<FilesType> | null
-  setFiles: Dispatch<SetStateAction<Array<FilesType> | null>>
-  uploads?: {[key: string]: { progress: number, status: string }}
+  setFiles: Dispatch<
+    SetStateAction<Array<FilesType> | null>
+  >
+  uploads?: {
+    [key: string]: {
+      progress: number
+      status: string
+    }
+  }
 }
 
 export interface DragDropType extends Children {
-  handleFileDrop: (event: DragEvent<Element>) => void
-  hanldeDragOver: (event: DragEvent<Element>) => void
-  handleDragLeave: (event: DragEvent<Element>) => void
-  handleDragEnter: (event: DragEvent<Element>) => void
+  handleFileDrop: (
+    event: DragEvent<Element>,
+  ) => void
+  hanldeDragOver: (
+    event: DragEvent<Element>,
+  ) => void
+  handleDragLeave: (
+    event: DragEvent<Element>,
+  ) => void
+  handleDragEnter: (
+    event: DragEvent<Element>,
+  ) => void
 }
 
-export interface FilesContextType extends FileListType, DragDropType {
+export interface FilesContextType
+  extends FileListType, DragDropType {
   handleCancelUpload: () => void
   isDragging: boolean
-  handleFileSelect: (event: ChangeEvent<EventTarget>) => void
+  handleFileSelect: (
+    event: ChangeEvent<EventTarget>,
+  ) => void
   handleRemoveFile: (index: number) => void
-  setUploads: Dispatch<SetStateAction<{[key: string]: { progress: number, status: string }}>>
-  confirmUpload: UseMutationResult<AxiosResponse<any, any, {}>, Error, string[], unknown>  
+  setUploads: Dispatch<
+    SetStateAction<{
+      [key: string]: {
+        progress: number
+        status: string
+      }
+    }>
+  >
+  confirmUpload: UseMutationResult<
+    AxiosResponse<any, any, {}>,
+    Error,
+    string[],
+    unknown
+  >
 }
